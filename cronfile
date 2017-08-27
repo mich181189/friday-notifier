@@ -1,0 +1,2 @@
+# Runs every day at 9am, only does much on Fridays though
+0 9 * * *    friday-notifier	/usr/bin/friday-notifier

@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import datetime
+import json
+
+from twilio.rest import Client
+
+CONFIG_FILE = "/etc/friday-notifier.conf"
+
+def send_msg(config, body):
+    for target in config["targets"]:
+        print("Messaging " + target)
+        client = Client(config["api_key"], config["api_secret"], config["account_sid"])
+        client.api.account.messages.create(to=target,
+                                           from_=config["from"],
+                                           body=body)
+
+
+def main():
+    with open(CONFIG_FILE, "r") as config_handle:
+        config = json.load(config_handle)
+
+    day = datetime.datetime.today().weekday()
+    if day == 4:
+        send_msg(config, "It's Friday!!!!!!! Hope you enjoy your day!")
+    if not config['debug']:
+        print("Not Friday. Exiting.")
+        exit(0)
+    if day > 4:
+        send_msg(config, "It isn't Friday, though it's still the weekend!")
+    elif day < 4:
+        send_msg(config, "Unfortunately, it isn't Friday. I'm so sorry...")
+
+if __name__ == "__main__":
+    main()
