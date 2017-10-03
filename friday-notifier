@@ -2,6 +2,7 @@
 
 import datetime
 import json
+import random
 
 from twilio.rest import Client
 
@@ -16,13 +17,39 @@ def send_msg(config, body):
                                            body=body)
 
 
+def generate_message():
+    it_is_friday = [
+        'It\'s Friday!!!!!!!',
+        'It appears to be Friday!',
+        'Unless I\'m very much mistaken, it is Friday.',
+        'This is your weekly alert of the occurence of Friday!',
+        'Friday has occured! (Like it did this time last week.)',
+        'I would like to inform you it is Friday today!',
+    ]
+
+    greeting = [
+        'I hope you enjoy your day!',
+        'Make the most of it - it won\'t happen again for another week!',
+        'Enjoy it while it lasts!',
+        'Have a great day!',
+        'Use this day wisely!',
+        'Enjoy this weekly occurence!',
+        'Have a great day!',
+    ]
+
+    random_notification = random.choice(it_is_friday)
+    random_greeting = random.choice(greeting)
+
+    return "%s %s" % (random_notification, random_greeting)
+
 def main():
+    random.seed()
     with open(CONFIG_FILE, "r") as config_handle:
         config = json.load(config_handle)
 
     day = datetime.datetime.today().weekday()
     if day == 4:
-        send_msg(config, "It's Friday!!!!!!! Hope you enjoy your day!")
+        send_msg(config, generate_message())
     if not config['debug']:
         print("Not Friday. Exiting.")
         exit(0)

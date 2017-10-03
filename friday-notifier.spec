@@ -1,18 +1,20 @@
 Name:           friday-notifier
-Version:        0.2
+Version:        0.3
 Release:        1%{?dist}
 Summary:        Sends text messages using the Twilio SMS API on fridays
 
 License:        WTFPL
 URL:            http://michaelcullen.name
 Source0:        friday-notifier
-Source1:	cronfile
-Source2:	config.json
+Source1:		cronfile
+Source2:		config.json
+Source3:		pylintrc
 
 Requires:       python3
 Requires:	python3-twilio
 Requires(pre): shadow-utils
 Requires: crontabs
+BuildRequires:	python3-pylint
 
 BuildArch: noarch
 
@@ -21,9 +23,12 @@ Sends text messages every Friday to one or more numbers
 
 %prep
 
-
 %build
 
+%check
+cp %{SOURCE0} .
+cp %{SOURCE3} .
+pylint-3 friday-notifier
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -48,6 +53,9 @@ getent passwd friday-notifier >/dev/null || \
 
 
 %changelog
+* Tue Oct 03 2017 Michael Cullen <michael@cullen-online.com> 0.3-1
+- Added PyLint support to build
+- Varied messages
 * Sun Aug 27 2017 Michael Cullen <michael@cullen-online.com> 0.2-1
 - Add support for API keys
 - Add debug mode

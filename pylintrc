@@ -1,0 +1,5 @@
+[MESSAGES CONTROL]
+
+# disable invalid-name because this is not a module and missing-docstring
+# because I don't want to document this!
+disable= invalid-name, missing-docstring
