@@ -1,0 +1,4 @@
+include pylintrc
+include README.md
+include cronfile
+include config.json

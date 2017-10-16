@@ -1,20 +1,17 @@
 Name:           friday-notifier
-Version:        0.3
+Version:        0.4
 Release:        1%{?dist}
 Summary:        Sends text messages using the Twilio SMS API on fridays
 
 License:        WTFPL
 URL:            http://michaelcullen.name
-Source0:        friday-notifier
-Source1:		cronfile
-Source2:		config.json
-Source3:		pylintrc
+Source0:        %{name}-%{version}.tar.gz
 
 Requires:       python3
-Requires:	python3-twilio
+Requires:		%{py3_dist twilio}
 Requires(pre): shadow-utils
 Requires: crontabs
-BuildRequires:	python3-pylint
+BuildRequires:	%{py3_dist pylint}
 
 BuildArch: noarch
 
@@ -22,21 +19,21 @@ BuildArch: noarch
 Sends text messages every Friday to one or more numbers
 
 %prep
+%autosetup
 
 %build
+%py3_build
 
 %check
-cp %{SOURCE0} .
-cp %{SOURCE3} .
 pylint-3 friday-notifier
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_sysconfdir}
 mkdir -p %{buildroot}%{_sysconfdir}/cron.d
-install -m 755 %{SOURCE0} %{buildroot}%{_bindir}/friday-notifier
-install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/cron.d/friday-notifier
-install -m 640 %{SOURCE2} %{buildroot}%{_sysconfdir}/friday-notifier.conf
+
+%py3_install
+
+install -m 644 cronfile %{buildroot}%{_sysconfdir}/cron.d/friday-notifier
+install -m 640 config.json %{buildroot}%{_sysconfdir}/friday-notifier.conf
 
 %pre
 getent group friday-notifier >/dev/null || groupadd -r friday-notifier
@@ -46,6 +43,7 @@ getent passwd friday-notifier >/dev/null || \
 
 %files
 %{_bindir}/friday-notifier
+%{python3_sitelib}/friday_notifier*
 %config(noreplace) %{_sysconfdir}/cron.d/friday-notifier
 
 %attr(640, root, friday-notifier) %config(noreplace) %{_sysconfdir}/friday-notifier.conf
@@ -53,6 +51,8 @@ getent passwd friday-notifier >/dev/null || \
 
 
 %changelog
+* Sun Oct 15 2017 Michael Cullen <michael@cullen-online.com> 0.4-1
+- switched to setup.py
 * Tue Oct 03 2017 Michael Cullen <michael@cullen-online.com> 0.3-1
 - Added PyLint support to build
 - Varied messages
