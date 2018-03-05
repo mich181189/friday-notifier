@@ -1,13 +1,13 @@
 Name:           friday-notifier
 Version:        0.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Sends text messages using the Twilio SMS API on fridays
 
 License:        WTFPL
 URL:            http://michaelcullen.name
 Source0:        %{name}-%{version}.tar.gz
 
-Requires:       python3
+Requires:       python3-devel
 Requires:		%{py3_dist twilio}
 Requires(pre): shadow-utils
 Requires: crontabs
@@ -51,6 +51,8 @@ getent passwd friday-notifier >/dev/null || \
 
 
 %changelog
+* Sat Oct 28 2017 Michael Cullen <michael@cullen-online.com> 0.4-2
+- fixed requires
 * Sun Oct 15 2017 Michael Cullen <michael@cullen-online.com> 0.4-1
 - switched to setup.py
 * Tue Oct 03 2017 Michael Cullen <michael@cullen-online.com> 0.3-1
