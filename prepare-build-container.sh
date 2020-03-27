@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rsync -zvh friday-notifier docker/friday-notifier
-rsync -zvh config.json docker/friday-notifier.conf
+cp -f friday-notifier docker/friday-notifier
+cp -f config.json docker/friday-notifier.conf
 
