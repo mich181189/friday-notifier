@@ -37,8 +37,22 @@ def generate_message():
         'Have a great day!',
     ]
 
+    special_greeting = [
+        'Do not take your work home with you.',
+        'Make sure to enjoy your day! (That is mandatory)',
+        'Please partake in mandatory enjoyment of this day.',
+        'Enjoy this day as much as you can!',
+    ]
+
     random_notification = random.choice(it_is_friday)
     random_greeting = random.choice(greeting)
+
+    # one-time special message override
+    now = datetime.datetime.today()
+    if now.day == 30 and now.month == 10 and now.year == 2020:
+        random_notification = "Merry Fri-Birth-Retirement-Day!"
+        random_greeting = random.choice(special_greeting)
+
 
     return "%s %s" % (random_notification, random_greeting)
 
