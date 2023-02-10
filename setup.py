@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='friday-notifier',
-      version='0.4',
+      version='0.5',
       description='Sends text messages using the Twilio SMS API on fridays',
       author='Michael Cullen',
       author_email='michael@michaelcullen.name',

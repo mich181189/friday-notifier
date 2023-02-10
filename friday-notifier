@@ -35,6 +35,7 @@ def generate_message():
         'Use this day wisely!',
         'Enjoy this weekly occurence!',
         'Have a great day!',
+        'Don\'t forget to say I love you to the people dear to you', 
     ]
 
     special_greeting = [

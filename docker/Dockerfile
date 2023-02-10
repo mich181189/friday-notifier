@@ -1,4 +1,4 @@
-FROM fedora:31
+FROM fedora:37
 
 RUN dnf update -y && dnf install -y python3-twilio && dnf clean all
 
